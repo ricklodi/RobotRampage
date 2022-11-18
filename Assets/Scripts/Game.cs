@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
+    public GameObject gameOverPanel;
     private static Game singleton;
     [SerializeField]
     RobotSpawn[] spawns;
@@ -76,7 +79,39 @@ public class Game : MonoBehaviour
             gameUI.SetScoreText(score);
         }
     }
-    // Update is called once per frame
+    public void OnGUI()
+    {
+        if (isGameOver && Cursor.visible == false)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+    // 2
+    public void GameOver()
+    {
+        isGameOver = true;
+        Time.timeScale = 0;
+        player.GetComponent<FirstPersonController>().enabled = false;
+        player.GetComponent<CharacterController>().enabled = false;
+        gameOverPanel.SetActive(true);
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(Constants.SceneBattle);
+        gameOverPanel.SetActive(true);
+    }
+    // 4
+    public void Exit()
+    {
+        Application.Quit();
+    }
+    // 5
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(Constants.SceneMenu);
+    }
+    // 3
     void Update()
     {
         
