@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class Game : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class Game : MonoBehaviour
     public int score;
     public int waveCountdown;
     public bool isGameOver;
-    // 1
+
     void Start()
     {
         singleton = this;
@@ -27,6 +28,11 @@ public class Game : MonoBehaviour
         enemiesLeft = 0;
         StartCoroutine("updateWaveTimer");
         SpawnRobots();
+
+        //Calling the Colorblind class
+        Wilberforce.Colorblind CameraColorBlind = Camera.main.gameObject.GetComponent<Wilberforce.Colorblind>();
+        CameraColorBlind.Type = Menu.ReturnCameraType();  //menuClass->cameratype; 
+        //camera.GetComponent<Wilberforce.ColorblindEditor>
     }
     // 2
     private void SpawnRobots()
